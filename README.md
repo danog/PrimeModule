@@ -1,5 +1,7 @@
 # PrimeModule
 
+[![Build Status](https://travis-ci.org/danog/PrimeModule.svg?branch=master)](https://travis-ci.org/danog/PrimeModule)
+
 Prime module capable of doing prime factorization of huge numbers very quickly.
 
 It can factorize huge numbers (even bigger than `PHP_INT_MAX` thanks to the wolfram alpha/python modules) very quickly.
