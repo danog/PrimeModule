@@ -9,7 +9,7 @@
             "email": "daniil@daniil.it"
         }
     ],
-    "require": {}
+    "require": {},
     "autoload": {
         "psr-0": {
             "danog\\": "lib/"
