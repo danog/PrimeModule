@@ -26,9 +26,11 @@ function test($n)
     echo '| '.str_pad($result, 6, ' ', STR_PAD_RIGHT).' |  python alt | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
     list($time, $result) = get_time(['\danog\PrimeModule', 'python'], $n);
     $GLOBALS['medium']['python'] += $time;
+    /*
     echo '| '.str_pad($result, 6, ' ', STR_PAD_RIGHT).' |  wolfram    | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
     list($time, $result) = get_time(['\danog\PrimeModule', 'native'], $n);
     $GLOBALS['medium']['native'] += $time;
+    */
     echo '| '.str_pad($result, 6, ' ', STR_PAD_RIGHT).' |  python     | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
     list($time, $result) = get_time(['\danog\PrimeModule', 'wolfram'], $n);
     $GLOBALS['medium']['wolfram'] += $time;
