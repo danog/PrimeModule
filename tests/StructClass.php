@@ -38,11 +38,11 @@ class StructClass
      *
      * Packs data into bytes
      *
-     * @param	...$data	Parameters to encode (may contain format string)
+     * @param	$data	Parameters to encode (may contain format string)
      *
      * @return Encoded data
      */
-    public function pack(...$data)
+    public function pack($data)
     {
         if ($this->format === null) {
             $format = array_shift($data);
@@ -50,7 +50,7 @@ class StructClass
             $format = $this->format;
         }
 
-        return $this->struct->pack($format, ...$data);
+        return $this->struct->pack($format, $data);
     }
 
     /**

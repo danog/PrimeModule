@@ -37,15 +37,15 @@ class Struct
      * Packs data into bytes
      *
      * @param	$format	    Format string
-     * @param	...$data	Parameters to encode
+     * @param	$data	Parameters to encode
      *
      * @return Encoded data
      */
-    public static function pack($format, ...$data)
+    public static function pack($format, $data)
     {
         self::constructor();
 
-        return self::$struct->pack($format, ...$data);
+        return self::$struct->pack($format, $data);
     }
 
     /**

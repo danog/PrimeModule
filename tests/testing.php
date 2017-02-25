@@ -80,7 +80,7 @@ function random_string($length)
 }
 function gen_payload()
 {
-    return \danog\PHP\Struct::pack('<Bqqii', 10, 0, (int) (time() << 32), 20, 1615239032).random_string(16);
+    return chr(10).str_repeat(chr(0), 8).\danog\PHP\Struct::pack('<q', (int) (time() << 32)).pack('VV', 20, 1615239032).random_string(16);
 }
 
 echo PHP_EOL.'----------- HUGE SEMIPRIME TESTS (100 semiprimes) ----------'.PHP_EOL;

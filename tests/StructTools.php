@@ -249,12 +249,13 @@ class StructTools
      * Packs data into bytes
      *
      * @param	$format		Format string
-     * @param	...$data	Parameters to encode
+     * @param	$data	Parameters to encode
      *
      * @return Encoded data
      */
-    public function pack($format, ...$data)
+    public function pack($format, $data)
     {
+        $data = [$data];
         $format = $this->padformat($format);
         $result = null; // Data to return
         $size = $this->calcsize($format);
