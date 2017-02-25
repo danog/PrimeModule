@@ -16,6 +16,6 @@ addons:
     packages:
     - python3
 before_script:
-- composer update --dev
+- composer require danog/phpstruct
 script:
 - "tests/testing.php"

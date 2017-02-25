@@ -78,7 +78,7 @@ function random_string($length)
 }
 function gen_payload()
 {
-    return pack('CPPVV', 10, 0, (int) (time() << 32), 20, 1615239032).random_string(16);
+    return \danog\PHP\Struct::pack('<Bqqii', 10, 0, (int) (time() << 32), 20, 1615239032).random_string(16);
 }
 
 echo PHP_EOL.'----------- HUGE SEMIPRIME TESTS (100 semiprimes) ----------'.PHP_EOL;
@@ -89,15 +89,7 @@ stream_set_timeout($tg, 1);
 $tot = 100;
 for ($x = 0; $x < $tot; $x++) {
     fwrite($tg, gen_payload());
-    $packet_length = ord(stream_get_contents($tg, 1));
-
-    if ($packet_length < 127) {
-        $packet_length <<= 2;
-    } else {
-        $packet_length_data = stream_get_contents($tg, 3);
-        $packet_length = unpack('V', $packet_length_data.pack('x'))[0] << 2;
-    }
-    $number = unpack('J', substr(stream_get_contents($tg, $packet_length), 57, 8))[1];
+    $number = \danog\PHP\Struct::unpack('>q', substr(stream_get_contents($tg, 85), 58, 8))[0];
     test_single($number);
 }
 fclose($tg);
