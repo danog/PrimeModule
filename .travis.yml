@@ -15,7 +15,5 @@ addons:
   apt:
     packages:
     - python3
-before_script:
-- composer require danog/phpstruct --ignore-platform-reqs
 script:
 - "tests/testing.php"

@@ -1,7 +1,9 @@
 #!/usr/bin/env php
 <?php
-
 require 'vendor/autoload.php';
+require 'StructClass.php';
+require 'Struct.php';
+require 'StructTools.php';
 function get_time($callable, $param)
 {
     $a = microtime(true);
