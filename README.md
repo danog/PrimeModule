@@ -28,7 +28,7 @@ This library has 4 prime factorization modules (ordered by speed, huge semiprime
 
 * wolfram - A [wolfram alpha](https://wolframalpha.com) module (usually takes around 2.1294961380959 seconds calculated using 100 huge semiprimes)
 
-* native - A [native PHP lopatin](https://github.com/LonamiWebs/Telethon/blob/master/telethon/crypto/factorizator.py) module (usually takes around 2.5698633241653 seconds calculated using 100 huge semiprimes, may sometimes be faster than the wolfram module)
+* native - A [native PHP lopatin](https://github.com/LonamiWebs/Telethon/blob/master/telethon/crypto/factorizator.py) module (usually takes around 2.5698633241653 seconds calculated using 100 huge semiprimes, may sometimes be faster than the wolfram module: for example on HHVM native factorization usually takes 0.1 seconds)
 
 These modules can be used either in the single variant, which returns only one factor (useful for semiprime factorization), or the full methods, that return an array with all of the factors.
 

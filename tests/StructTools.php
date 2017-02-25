@@ -101,11 +101,6 @@ class StructTools
             'H' => strlen(pack($this->NATIVE_FORMATS['H'], 700)),
             'i' => strlen(pack($this->NATIVE_FORMATS['i'], 1)),
             'I' => strlen(pack($this->NATIVE_FORMATS['I'], 1)),
-            'l' => strlen(pack($this->NATIVE_FORMATS['l'], -700)),
-            'L' => strlen(pack($this->NATIVE_FORMATS['L'], 700)),
-            'q' => $this->IS64BIT ? strlen(pack($this->NATIVE_FORMATS['q'], 700)) : 8,
-            'Q' => $this->IS64BIT ? strlen(pack($this->NATIVE_FORMATS['Q'], 700)) : 8,
-
             // Floating point formats
             'f' => strlen(pack($this->NATIVE_FORMATS['f'], 2.0)),
             'd' => strlen(pack($this->NATIVE_FORMATS['d'], 2.0)),
