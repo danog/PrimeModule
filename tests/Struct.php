@@ -23,13 +23,14 @@ class Struct
      * Istantiates the PHPStruct class in a static variable
      *
      * @param	$format	    Format string
-     *
      */
-    public static function constructor() {
+    public static function constructor()
+    {
         if (self::$struct == null) {
             self::$struct = new \danog\PHP\StructTools();
         }
     }
+
     /**
      * pack.
      *
@@ -43,6 +44,7 @@ class Struct
     public static function pack($format, ...$data)
     {
         self::constructor();
+
         return self::$struct->pack($format, ...$data);
     }
 
@@ -59,6 +61,7 @@ class Struct
     public static function unpack($format, $data)
     {
         self::constructor();
+
         return self::$struct->unpack($format, $data);
     }
 
