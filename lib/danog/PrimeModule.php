@@ -265,4 +265,206 @@ class PrimeModule
 
         return false;
     }
+    
+
+    private function primesbelow($N) {
+        $correction = ($N % 6 > 1) ? true : false;
+        $N_Array = [$N, $N-1, $N+4, $N+3, $N+2, $N+1];
+        $N = $N_Array[$N%6];
+
+        $sieve = array();
+        for ($i=0; $i < (int)$N/3 ; $i++) { 
+            $sieve[$i] = true;
+        }
+        $sieve[0] = false;
+
+        for ($i=0; $i < (int)((int)pow($N, 0.5) / 3) + 1; $i++) {
+            if ($sieve[$i]) {
+                $k = (3 * $i + 1) | 1;
+                $startIndex1 = (int)($k*$k / 3);
+                $period =  2*$k;
+                for ($j=$startIndex1; $j < count($sieve); $j = $j+$period) { 
+                    $sieve[$j] = false;
+                }
+                $startIndex2 = (int)( ($k*$k + 4*$k - 2*$k*($i%2)) /3 );
+                $period =  2*$k;
+                for ($k=$startIndex2; $k < count($sieve); $k = $k+$period) { 
+                    $sieve[$k] = false;
+                }
+            }
+        }
+
+        $resultArray = [2, 3];
+        $t = 1;
+        for ($i=1; $i < (int)($N/3) - $correction ; $i++) { 
+            if ($sieve[$i]) {
+                $resultArray[$t+1] = (3 * $i + 1) | 1;
+                $t++;
+            }
+        }
+        return $resultArray;
+    }
+
+    private function isprime ($n, $precision = 7) {
+        $smallprimeset  = $this->primesbelow(100000);
+        $_smallprimeset = 100000;
+        if ($n == 1 || $n % 2 == 0) {
+            return false;
+        }
+        elseif ($n < 1)
+            throw new Exception("Out of bounds, first argument must be > 0");
+        elseif ($n < $_smallprimeset) {
+            return in_array($n, $smallprimeset);
+        }
+
+        $d = $n - 1;
+        $s = 0;
+        while ($d % 2 == 0){
+            $d = (int)($d / 2);
+            $s += 1;
+        }
+
+        for ($i=0; $i < $precision; $i++) { 
+            // random.randrange(2, n - 2) means:
+            // $a = mt_rand(2, $n - 3);
+            // maybe $n would be bigger that PHP_MAX_INT
+            $a = mt_rand(2, 1084);
+            $x = bcpowmod($a, $d, $n);
+
+            if ($x == 1 || $x == $n - 1) continue;
+
+            $flagfound = 0;
+            for ($j=0; $j < $s - 1; $j++) {
+                $x = bcpowmod($x, 2, $n);
+                if ($x == 1){
+                    return false;
+                } 
+                if ($x == $n - 1){
+                    $flagfound = 1;
+                    break;
+                }
+            }
+            if ($flagfound == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private function pollard_brent($n) {
+
+        $n = (int)$n;
+
+        if ($n % 2 == 0) return 2;
+
+        if ( bcmod($n , 2) == 0 ) return 2;
+        if ( bcmod($n , 3) == 0 ) return 3;
+
+        // $y = mt_rand(1, $n-1);
+        // $c = mt_rand(1, $n-1);
+        // $m = mt_rand(1, $n-1);
+        // Again, $n may be bigger than PHP_MAX_INT
+        // also, small numbers has a big affect in a good performance
+        $y = 2;
+        $c = 3;
+        $m = 4;
+
+        $g = 1;
+        $r = 1;
+        $q = 1;
+
+        while ($g == 1) {
+            $x = $y;
+            for ($i=0; $i < $r; $i++) {
+                // $y = gmp_mod( (bcpowmod($y, 2, $n) + $c) , $n);
+                $y = bcmod( (bcpowmod($y, 2, $n) + $c) , $n);
+            }
+
+            $k = 0;
+            while ($k < $r && $g == 1) {
+                $ys= $y;
+                for ($j=0; $j < min($m, $r-$k); $j++) {
+
+                    // $y = gmp_mod( (bcpowmod($y, 2, $n) + $c), $n );
+                    $y = bcmod( (bcpowmod($y, 2, $n) + $c), $n );
+
+                    // $q = gmp_mod($q * abs($x-$y), $n);
+                    $mul = bcmul($q, abs($x-$y));
+                    $q = bcmod($mul, $n);
+                }
+
+                $g = $this->gcd2($q, $n);
+                $k += $m;
+            }
+            $r *= 2;
+        }
+        if ($g == $n) {
+            while (true) {
+                // $ys = ( bcpowmod($ys, 2, $n) + $c ) % $n;
+                $ys = bcmod (( bcpowmod($ys, 2, $n) + $c ) , $n);
+                $g = $this->gcd2( abs($x - $ys), $n );
+                if ($g > 1) {
+                    break;
+                }
+            }
+        }
+        return $g;
+    }
+
+
+    public function primefactors($n, $sort = false) {
+
+        $smallprimes = $this->primesbelow(10000);
+        $factors = [];
+
+        $limit = bcadd( bcsqrt($n) , 1);
+        foreach ($smallprimes as $checker) {
+            if ($checker > $limit) {
+                break;
+            }
+            // while (gmp_mod($n, $checker) == 0) {
+            while ( bcmod($n, $checker) == 0 ) {
+                array_push($factors, $checker);
+                $n = bcdiv($n, $checker);
+                $limit = bcadd( bcsqrt($n) , 1);
+                if ($checker > $limit) {
+                    break;
+                }
+            }
+        }
+
+        if ($n < 2) {
+            return $factors;
+        }
+
+        while ($n > 1) {
+            if ($this->isprime($n)) {
+                array_push($factors, $n);
+                break;
+            }
+            $factor  = $this->pollard_brent($n);
+            $factors = array_merge($factors, $this->primefactors($factor)); 
+            $n = (int)($n/$factor);
+        }
+        if ($sort) {
+            sort($factors);
+        }
+
+        return $factors;
+
+    }
+
+
+    private function gcd2($a, $b) {
+        if ($a == $b) return $a;
+        while ($b > 0) {
+            $a2 = $a;
+            $a = $b;
+            $b = bcmod($a2 , $b);
+        }
+        return $a;
+    }
+
+
+
 }
