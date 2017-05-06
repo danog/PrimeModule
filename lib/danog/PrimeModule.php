@@ -185,15 +185,21 @@ class PrimeModule
 
         return $res;
     }
-
-    public static function python($what)
+    public static function native_single_cpp($what)
     {
-        $res = [self::python_single($what)];
+        if (!extension_loaded('primemodule')) return false;
+        try {
+            return factorize($what);
+        } catch (\Exception $e) { return false; }
+    }
+    public static function native_cpp($what)
+    {
+        $res = [self::native_single_cpp($what)];
         if ($res[0] === false) {
             return false;
         }
         while (array_product($res) !== $what) {
-            $res[] = self::python_single($what / array_product($res));
+            $res[] = self::native_single_cpp($what / array_product($res));
         }
 
         return $res;
@@ -224,6 +230,10 @@ class PrimeModule
 
     public static function auto($what)
     {
+        $res = self::native_cpp($what);
+        if (is_array($res)) {
+            return $res;
+        }
         $res = self::python_alt($what);
         if (is_array($res)) {
             return $res;
@@ -246,6 +256,10 @@ class PrimeModule
 
     public static function auto_single($what)
     {
+        $res = self::native_single_cpp($what);
+        if ($res !== false) {
+            return $res;
+        }
         $res = self::python_single_alt($what);
         if ($res !== false) {
             return $res;

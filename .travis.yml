@@ -15,8 +15,10 @@ addons:
   apt:
     packages:
     - python3
+
 before_script:
 - composer update --dev
+- "tests/install_deps.sh"
 
 script:
 - "tests/testing.php"

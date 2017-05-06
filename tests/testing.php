@@ -23,9 +23,16 @@ function test($n)
     echo '|'.str_pad('Multiple factorization of '.$n, strlen($init) - 2, ' ', STR_PAD_BOTH).'|'.PHP_EOL;
     echo '|'.str_pad('', strlen($init) - 2, '_', STR_PAD_RIGHT).'|'.PHP_EOL;
     echo $init.PHP_EOL;
+
+    list($time, $result) = get_time(['\danog\PrimeModule', 'native_cpp'], $n, true);
+    $GLOBALS['medium']['native_cpp'] += $time;
+    echo '| '.str_pad($result, 6, ' ', STR_PAD_RIGHT).' |  native cpp | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
+
     list($time, $result) = get_time(['\danog\PrimeModule', 'python_alt'], $n, true);
     $GLOBALS['medium']['python_alt'] += $time;
     echo '| '.str_pad($result, 6, ' ', STR_PAD_RIGHT).' |  python alt | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
+
+
     list($time, $result) = get_time(['\danog\PrimeModule', 'python'], $n);
     $GLOBALS['medium']['python'] += $time;
     /*
@@ -48,9 +55,14 @@ function test_single($n, $messy = false)
     echo '|'.str_pad('', strlen($init) - 2, '_', STR_PAD_RIGHT).'|'.PHP_EOL;
     echo $init.PHP_EOL;
 
+    list($time, $result) = get_time(['\danog\PrimeModule', 'native_single_cpp'], $n);
+    $GLOBALS['medium']['native_cpp'] += $time;
+    echo '| '.str_pad($result, strlen($n), ' ', STR_PAD_RIGHT).' |  native cpp | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
+
     list($time, $result) = get_time(['\danog\PrimeModule', 'python_single_alt'], $n);
     $GLOBALS['medium']['python_alt'] += $time;
     echo '| '.str_pad($result, strlen($n), ' ', STR_PAD_RIGHT).' |  python alt | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
+
     if (!$messy) {
         list($time, $result) = get_time(['\danog\PrimeModule', 'python_single'], $n);
         $GLOBALS['medium']['python'] += $time;
@@ -84,7 +96,7 @@ function gen_payload()
 }
 
 echo PHP_EOL.'----------- HUGE SEMIPRIME TESTS (100 semiprimes) ----------'.PHP_EOL;
-$GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0];
+$GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0];
 $tg = fsockopen('tcp://149.154.167.40:443');
 fwrite($tg, chr(239));
 stream_set_timeout($tg, 1);
@@ -100,7 +112,7 @@ foreach ($medium as $type => $total) {
     echo $type.': total time '.$total.', medium time '.($total / $tot).PHP_EOL;
 }
 echo PHP_EOL.'------------------- SMALL MULTIPLE FACTOR TESTS -------------------'.PHP_EOL;
-$GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0];
+$GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0];
 
 foreach ([200, 327, 35, 13589] as $multiple) {
     test($multiple);
