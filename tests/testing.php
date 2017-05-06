@@ -32,7 +32,6 @@ function test($n)
     $GLOBALS['medium']['python_alt'] += $time;
     echo '| '.str_pad($result, 6, ' ', STR_PAD_RIGHT).' |  python alt | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
 
-
     list($time, $result) = get_time(['\danog\PrimeModule', 'python'], $n);
     $GLOBALS['medium']['python'] += $time;
     /*

@@ -185,13 +185,19 @@ class PrimeModule
 
         return $res;
     }
+
     public static function native_single_cpp($what)
     {
-        if (!extension_loaded('primemodule')) return false;
+        if (!extension_loaded('primemodule')) {
+            return false;
+        }
         try {
             return factorize($what);
-        } catch (\Exception $e) { return false; }
+        } catch (\Exception $e) {
+            return false;
+        }
     }
+
     public static function native_cpp($what)
     {
         $res = [self::native_single_cpp($what)];
