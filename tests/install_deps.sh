@@ -10,6 +10,6 @@ git clone https://github.com/danog/PrimeModule-ext
 cd PrimeModule-ext
 make -j16
 sudo make install
-
+phpenv config-add primemodule.ini
 cd ..
 
