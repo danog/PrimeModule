@@ -1,4 +1,6 @@
 #!/bin/bash -e
+find ~/.phpenv/versions/$(phpenv version-name)/
+
 cd /tmp
 git clone https://github.com/CopernicaMarketingSoftware/PHP-CPP
 cd PHP-CPP
