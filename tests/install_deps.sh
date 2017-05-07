@@ -1,5 +1,5 @@
 #!/bin/bash -e
-find ~/.phpenv/versions/$(phpenv version-name)/
+export PATH=$PATH:~/.phpenv/versions/$(phpenv version-name)/bin
 
 cd /tmp
 git clone https://github.com/CopernicaMarketingSoftware/PHP-CPP
