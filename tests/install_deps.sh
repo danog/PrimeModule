@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 export PATH=$PATH:~/.phpenv/versions/$(phpenv version-name)/bin
 
 cd /tmp
@@ -15,3 +15,4 @@ sudo make install
 phpenv config-add primemodule.ini
 cd ..
 
+exit 0
