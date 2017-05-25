@@ -10,6 +10,9 @@
         }
     ],
     "require": {},
+    "suggest": {
+        "ext-primemodule": "Install the native C++ extension for extremely fast factorization (https://github.com/danog/PrimeModule-ext)"
+    },
     "autoload": {
         "psr-0": {
             "danog\\": "lib/"
