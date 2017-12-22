@@ -16,7 +16,6 @@ namespace danog;
 
 class PrimeModule
 {
-    
     public static function native_single($what)
     {
         if (!is_int($what)) {
@@ -68,7 +67,6 @@ class PrimeModule
         return min($p, $g);
     }
 
-
     public static function native($what)
     {
         $res = [self::native_single($what)];
@@ -78,8 +76,7 @@ class PrimeModule
 
         return $res;
     }
-    
-    
+
     public static function python_single($what)
     {
         if (function_exists('shell_exec')) {
@@ -110,10 +107,10 @@ class PrimeModule
         while (array_product($res) !== $what) {
             $res[] = self::python_single($what / array_product($res));
         }
+
         return $res;
     }
-    
-    
+
     public static function python_single_alt($what)
     {
         if (function_exists('shell_exec')) {
@@ -147,6 +144,7 @@ class PrimeModule
 
         return $res;
     }
+
     public static function wolfram_single($what)
     {
         $query = 'Do prime factorization of '.$what;
@@ -191,7 +189,6 @@ class PrimeModule
         return false;
     }
 
-
     public static function wolfram($what)
     {
         $res = [self::wolfram_single($what)];
@@ -227,6 +224,7 @@ class PrimeModule
 
         return $res;
     }
+
     public static function auto_single($what)
     {
         $res = self::native_single_cpp($what);
@@ -252,7 +250,6 @@ class PrimeModule
 
         return false;
     }
-
 
     public static function auto($what)
     {
