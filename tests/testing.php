@@ -96,7 +96,7 @@ function gen_payload()
 
 echo PHP_EOL.'----------- HUGE SEMIPRIME TESTS (100 semiprimes) ----------'.PHP_EOL;
 $GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0];
-$tg = fsockopen('tcp://149.154.167.40:443');
+$tg = fsockopen('tcp://149.154.167.51:443');
 fwrite($tg, chr(239));
 stream_set_timeout($tg, 1);
 $tot = 100;
