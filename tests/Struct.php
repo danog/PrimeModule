@@ -69,7 +69,7 @@ class Struct
      * calcsize.
      *
      * Return the size of the struct (and hence of the string) corresponding to the given format.
-
+     *
      *
      * @param	$format	Format string
      *

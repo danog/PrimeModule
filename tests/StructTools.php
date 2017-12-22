@@ -235,6 +235,7 @@ class StructTools
         if (error_reporting() === 0) {
             return true; // return true to continue through the others error handlers
         }
+
         throw new StructException($errstr.' on line '.$errline, $errno);
     }
 

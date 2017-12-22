@@ -191,6 +191,7 @@ class PrimeModule
         if (!extension_loaded('primemodule')) {
             return false;
         }
+
         try {
             return factorize($what);
         } catch (\Exception $e) {
