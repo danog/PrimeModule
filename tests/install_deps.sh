@@ -11,8 +11,7 @@ cd ../
 git clone https://github.com/danog/PrimeModule-ext
 cd PrimeModule-ext
 make -j16
-sudo make install
-phpenv config-add primemodule.ini
+echo "extension=$PWD/primemodule.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 cd ..
 
 exit 0
