@@ -80,8 +80,8 @@ class PrimeModule
     public static function python_single($what)
     {
         if (function_exists('shell_exec')) {
-            $res = shell_exec('timeout 10 python '.__DIR__.'/prime.py '.$what);
-            if ($res == '' || is_null($res)) {
+            $res = trim(shell_exec('timeout 10 python '.__DIR__.'/prime.py '.$what.' 2>&1'));
+            if ($res == '' || is_null($res) || !is_numeric($res)) {
                 return false;
             }
             $newval = intval($res);
@@ -114,8 +114,8 @@ class PrimeModule
     public static function python_single_alt($what)
     {
         if (function_exists('shell_exec')) {
-            $res = shell_exec('python '.__DIR__.'/alt_prime.py '.$what);
-            if ($res == '' || is_null($res)) {
+            $res = trim(shell_exec('python '.__DIR__.'/alt_prime.py '.$what.' 2>&1'));
+            if ($res == '' || is_null($res) || !is_numeric($res)) {
                 return false;
             }
             $newval = intval($res);
