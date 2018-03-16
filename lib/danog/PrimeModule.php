@@ -215,7 +215,7 @@ class PrimeModule
     public static function native_cpp($what)
     {
         $res = [self::native_single_cpp($what)];
-        if ($res[0] === false) {
+        if ($res[0] == false) {
             return false;
         }
         while (array_product($res) !== $what) {
