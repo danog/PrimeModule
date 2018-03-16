@@ -94,6 +94,7 @@ function gen_payload()
     return chr(10).str_repeat(chr(0), 8).\danog\PHP\Struct::pack('<q', (int) (time() << 32)).pack('VV', 20, 1615239032).random_string(16);
 }
 
+
 echo PHP_EOL.'----------- HUGE SEMIPRIME TESTS (100 semiprimes) ----------'.PHP_EOL;
 $GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0];
 $tg = fsockopen('tcp://149.154.167.51:443');
@@ -110,6 +111,7 @@ fclose($tg);
 foreach ($medium as $type => $total) {
     echo $type.': total time '.$total.', medium time '.($total / $tot).PHP_EOL;
 }
+
 echo PHP_EOL.'------------------- SMALL MULTIPLE FACTOR TESTS -------------------'.PHP_EOL;
 $GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0];
 

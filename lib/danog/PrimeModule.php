@@ -218,8 +218,11 @@ class PrimeModule
         if ($res[0] == false) {
             return false;
         }
-        while (array_product($res) !== $what) {
-            $res[] = self::native_single_cpp($what / array_product($res));
+        while (($product = array_product($res)) !== $what) {
+            if ($product == 0) {
+                return false;
+            }
+            $res[] = self::native_single_cpp($what / $product);
         }
 
         return $res;
