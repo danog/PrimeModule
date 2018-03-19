@@ -2,7 +2,7 @@
     "name": "danog/primemodule",
     "description": "Prime module capable of doing prime factorization of huge numbers very quickly.\"",
     "type": "library",
-    "license": "AGLPV3",
+    "license": "AGPL-3.0-only",
     "authors": [
         {
             "name": "Daniil Gentili",
