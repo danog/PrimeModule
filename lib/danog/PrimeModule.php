@@ -82,7 +82,12 @@ class PrimeModule
         if (function_exists('shell_exec')) {
             $res = trim(shell_exec('timeout 10 python '.__DIR__.'/prime.py '.$what.' 2>&1'));
             if ($res == '' || is_null($res) || !is_numeric($res)) {
-                return false;
+                copy(__DIR__.'/prime.py', getcwd().'/.prime.py');
+                $res = trim(shell_exec('timeout 10 python '.getcwd().'/.prime.py '.$what.' 2>&1'));
+                unlink(getcwd().'/.prime.py');
+                if ($res == '' || is_null($res) || !is_numeric($res)) {
+                    return false;
+                }
             }
             $newval = intval($res);
             if (is_int($newval)) {
@@ -116,7 +121,12 @@ class PrimeModule
         if (function_exists('shell_exec')) {
             $res = trim(shell_exec('python '.__DIR__.'/alt_prime.py '.$what.' 2>&1'));
             if ($res == '' || is_null($res) || !is_numeric($res)) {
-                return false;
+                copy(__DIR__.'/alt_prime.py', getcwd().'/.alt_prime.py');
+                $res = trim(shell_exec('python '.getcwd().'/.alt_prime.py '.$what.' 2>&1'));
+                unlink(getcwd().'/.alt_prime.py');
+                if ($res == '' || is_null($res) || !is_numeric($res)) {
+                    return false;
+                }
             }
             $newval = intval($res);
             if (is_int($newval)) {
