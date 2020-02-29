@@ -1,11 +1,11 @@
-sudo: required
-dist: trusty
-group: edge
 language: php
+
 php:
 - '7.0'
 - '7.1'
 - '7.2'
+- '7.3'
+- '7.4'
 - nightly
 - hhvm
 - '5.6'
@@ -18,7 +18,7 @@ addons:
     - python3
 
 before_script:
-- composer update --dev
+- composer update
 - "tests/install_deps.sh"
 
 script:
