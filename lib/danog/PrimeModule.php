@@ -27,15 +27,19 @@ class PrimeModule
             }
         }
         $g = 0;
-        for ($i = 0; $i < 3; $i++) {
-            $q = (rand(0, 127) & 15) + 17;
-            $x = rand(0, 1000000000) + 1;
+        $it = 0;
+        for ($i = 0; $i < 3 || $it < 1000; $i++) {
+            $t = ((rand(0, 127) & 15) + 17) % $what;
+            $x = rand(0, 1 << 31) % ($what - 1) + 1;
             $y = $x;
             $lim = 1 << ($i + 18);
             for ($j = 1; $j <= $lim; $j++) {
-                list($a, $b, $c) = [$x, $x, $q];
-                while ($b != 0) {
-                    if (($b & 1) != 0) {
+                ++$it;
+                $a = $x;
+                $b = $x;
+                $c = $t;
+                while ($b) {
+                    if ($b & 1) {
                         $c += $a;
                         if ($c >= $what) {
                             $c -= $what;
@@ -48,23 +52,25 @@ class PrimeModule
                     $b >>= 1;
                 }
                 $x = $c;
-                $z = ($x < $y) ? $y - $x : $x - $y;
+                $z = ($x < $y) ? $what + $x - $y : $x - $y;
                 $g = self::gcd($z, $what);
                 if ($g != 1) {
                     break;
                 }
 
-                if (($j & ($j - 1)) === 0) {
+                if (!($j & ($j - 1))) {
                     $y = $x;
                 }
             }
-            if ($g > 1) {
+            if ($g > 1 && $g < $what) {
                 break;
             }
         }
-        $p = $what;
 
-        return min($p, $g);
+        if ($g > 1 && $g < $what) {
+            return $g;
+        }
+        return $what;
     }
 
     public static function native($what)
@@ -80,10 +86,10 @@ class PrimeModule
     public static function python_single($what)
     {
         if (function_exists('shell_exec')) {
-            $res = trim(shell_exec('timeout 10 python '.__DIR__.'/prime.py '.$what.' 2>&1'));
+            $res = trim(shell_exec('timeout 10 python2 '.__DIR__.'/prime.py '.$what.' 2>&1'));
             if ($res == '' || is_null($res) || !is_numeric($res)) {
                 copy(__DIR__.'/prime.py', getcwd().'/.prime.py');
-                $res = trim(shell_exec('timeout 10 python '.getcwd().'/.prime.py '.$what.' 2>&1'));
+                $res = trim(shell_exec('timeout 10 python2 '.getcwd().'/.prime.py '.$what.' 2>&1'));
                 unlink(getcwd().'/.prime.py');
                 if ($res == '' || is_null($res) || !is_numeric($res)) {
                     return false;

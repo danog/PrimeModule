@@ -1,5 +1,5 @@
+import sys
 from math import log
-from argparse import ArgumentParser
 
 # Multiple Polynomial Quadratic Sieve
 def mpqs(n, verbose=False):
@@ -308,7 +308,8 @@ def mod_sqrt(n, p):
 
 #integer sqrt of n
 def isqrt(n):
-  c = n*4/3
+  n = int(n)
+  c = int(n*4/3)
   d = c.bit_length()
 
   a = d>>1
@@ -321,10 +322,10 @@ def isqrt(n):
 
   if x != y:
     x = y
-    y = (x + n/x) >> 1
+    y = int(x + n/x) >> 1
     while y < x:
       x = y
-      y = (x + n/x) >> 1
+      y = int(x + n/x) >> 1
   return x
 
 # strong probable prime
@@ -496,12 +497,4 @@ def next_prime(n):
         return i
       i += o
 
-if __name__ == "__main__":
-  parser =ArgumentParser(description='Uses a MPQS to factor a composite number')
-  parser.add_argument('composite', metavar='number_to_factor', type=long,
-      help='the composite number to factor')
-  parser.add_argument('--verbose', dest='verbose', action='store_true',
-      help="enable verbose output")
-  args = parser.parse_args()
-
-  print mpqs(args.composite)
+print(mpqs(int(sys.argv[1])))
