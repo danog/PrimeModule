@@ -34,7 +34,7 @@ class PrimeModule
             $y = $x;
             $lim = 1 << ($i + 18);
             for ($j = 1; $j <= $lim; $j++) {
-                ++$it;
+                $it++;
                 $a = $x;
                 $b = $x;
                 $c = $t;
@@ -70,6 +70,7 @@ class PrimeModule
         if ($g > 1 && $g < $what) {
             return $g;
         }
+
         return $what;
     }
 

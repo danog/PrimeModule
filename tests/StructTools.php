@@ -377,6 +377,7 @@ class StructTools
             if ($command['modifiers']['FORMAT_ENDIANNESS'] != $command['modifiers']['BIG_ENDIAN']) {
                 $dataarray[$command['datakey']] = strrev($dataarray[$command['datakey']]);
             } // Reverse if wrong endianness
+
             try {
                 switch ($command['phpformat']) {
                     case 'p':
