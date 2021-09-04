@@ -251,15 +251,15 @@ class PrimeModule
         if ($res !== false) {
             return $res;
         }
+        $res = self::native_single((int) $what);
+        if ($res !== false) {
+            return $res;
+        }
         $res = self::python_single_alt($what);
         if ($res !== false) {
             return $res;
         }
         $res = self::python_single($what);
-        if ($res !== false) {
-            return $res;
-        }
-        $res = self::native_single((int) $what);
         if ($res !== false) {
             return $res;
         }
