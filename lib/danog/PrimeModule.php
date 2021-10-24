@@ -223,13 +223,14 @@ class PrimeModule
         if (!extension_loaded('primemodule')) {
             if (class_exists(FFI::class)) {
                 try {
-                    $ffi = FFI::load("/usr/include/primemodule-ffi.h");
+                    $ffi = FFI::load('/usr/include/primemodule-ffi.h');
                     $result = $ffi->factorizeFFI((string) $what);
                     if ($result > 0) {
                         return $result;
                     }
                 } catch (\Throwable $e) {
                 }
+
                 return false;
             }
 
