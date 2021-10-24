@@ -9,7 +9,9 @@
             "email": "daniil@daniil.it"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=7.0"
+    },
     "suggest": {
         "ext-primemodule": "Install the native C++ extension for extremely fast factorization (https://github.com/danog/PrimeModule-ext)"
     },

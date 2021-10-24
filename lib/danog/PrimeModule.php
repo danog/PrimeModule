@@ -14,6 +14,8 @@ If not, see <http://www.gnu.org/licenses/>.
 
 namespace danog;
 
+use FFI;
+
 class PrimeModule
 {
     public static function native_single($what)
@@ -219,6 +221,18 @@ class PrimeModule
     public static function native_single_cpp($what)
     {
         if (!extension_loaded('primemodule')) {
+            if (class_exists(FFI::class)) {
+                try {
+                    $ffi = FFI::load("/usr/include/primemodule-ffi.h");
+                    $result = $ffi->factorizeFFI((string) $what);
+                    if ($result > 0) {
+                        return $result;
+                    }
+                } catch (\Throwable $e) {
+                }
+                return false;
+            }
+
             return false;
         }
 
