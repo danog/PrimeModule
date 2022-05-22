@@ -219,6 +219,7 @@ class PrimeModule
     }
 
     private static ?FFI $ffi = null;
+
     public static function native_single_cpp($what)
     {
         if (!extension_loaded('primemodule')) {
