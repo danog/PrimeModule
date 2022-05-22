@@ -218,13 +218,14 @@ class PrimeModule
         return $res;
     }
 
+    private static ?FFI $ffi = null;
     public static function native_single_cpp($what)
     {
         if (!extension_loaded('primemodule')) {
             if (class_exists(FFI::class)) {
                 try {
-                    $ffi = FFI::load("/usr/include/primemodule-ffi.h");
-                    $result = $ffi->factorizeFFI((string) $what);
+                    self::$ffi ??= FFI::load("/usr/include/primemodule-ffi.h");
+                    $result = self::$ffi->factorizeFFI((string) $what);
                     if ($result > 0) {
                         return $result;
                     }
