@@ -10,14 +10,27 @@
         }
     ],
     "require": {
-        "php": ">=7.0"
+        "php": "^8.0"
     },
     "suggest": {
-        "ext-primemodule": "Install the native C++ extension for extremely fast factorization (https://github.com/danog/PrimeModule-ext)"
+        "ext-primemodule": "Install the native C++ extension for extremely fast factorization (https://prime.madelineproto.xyz)"
     },
     "autoload": {
         "psr-0": {
             "danog\\": "lib/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "phabel/phabel": true
+        }
+    },
+    "require-dev": {
+        "phabel/phabel": "^1"
+    },
+    "extra": {
+        "phabel": {
+            "revision": 0
         }
     }
 }
