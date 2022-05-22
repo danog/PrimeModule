@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "php": "^8.0"
+        "phabel/phabel": "^1.0",
+        "php": "*"
     },
     "suggest": {
         "ext-primemodule": "Install the native C++ extension for extremely fast factorization (https://prime.madelineproto.xyz)"
@@ -18,7 +19,10 @@
     "autoload": {
         "psr-0": {
             "danog\\": "lib/"
-        }
+        },
+        "files": [
+            "___transpiledWithPhabel.php"
+        ]
     },
     "config": {
         "allow-plugins": {
@@ -30,7 +34,8 @@
     },
     "extra": {
         "phabel": {
-            "revision": 0
+            "revision": 0,
+            "require": []
         }
     }
 }
