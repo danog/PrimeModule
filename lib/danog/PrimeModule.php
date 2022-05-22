@@ -32,7 +32,7 @@ class PrimeModule
         $it = 0;
         for ($i = 0; $i < 3 || $it < 1000; $i++) {
             $t = ((rand(0, 127) & 15) + 17) % $what;
-            $x = rand(0, 1 << 31) % ($what - 1) + 1;
+            $x = (rand() % ($what - 1)) + 1;
             $y = $x;
             $lim = 1 << ($i + 18);
             for ($j = 1; $j <= $lim; $j++) {
