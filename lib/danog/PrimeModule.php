@@ -89,10 +89,10 @@ class PrimeModule
     public static function python_single($what)
     {
         if (function_exists('shell_exec')) {
-            $res = trim(shell_exec('timeout 10 python2 '.__DIR__.'/prime.py '.$what.' 2>&1'));
+            $res = trim(shell_exec('timeout 10 python2 '.__DIR__.'/prime.py '.$what.' 2>&1') ?? '');
             if ($res == '' || is_null($res) || !is_numeric($res)) {
                 copy(__DIR__.'/prime.py', getcwd().'/.prime.py');
-                $res = trim(shell_exec('timeout 10 python2 '.getcwd().'/.prime.py '.$what.' 2>&1'));
+                $res = trim(shell_exec('timeout 10 python2 '.getcwd().'/.prime.py '.$what.' 2>&1') ?? '');
                 unlink(getcwd().'/.prime.py');
                 if ($res == '' || is_null($res) || !is_numeric($res)) {
                     return false;
@@ -128,10 +128,10 @@ class PrimeModule
     public static function python_single_alt($what)
     {
         if (function_exists('shell_exec')) {
-            $res = trim(shell_exec('python '.__DIR__.'/alt_prime.py '.$what.' 2>&1'));
+            $res = trim(shell_exec('python '.__DIR__.'/alt_prime.py '.$what.' 2>&1') ?? '');
             if ($res == '' || is_null($res) || !is_numeric($res)) {
                 copy(__DIR__.'/alt_prime.py', getcwd().'/.alt_prime.py');
-                $res = trim(shell_exec('python '.getcwd().'/.alt_prime.py '.$what.' 2>&1'));
+                $res = trim(shell_exec('python '.getcwd().'/.alt_prime.py '.$what.' 2>&1') ?? '');
                 unlink(getcwd().'/.alt_prime.py');
                 if ($res == '' || is_null($res) || !is_numeric($res)) {
                     return false;
