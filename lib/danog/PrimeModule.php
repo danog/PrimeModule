@@ -112,6 +112,33 @@ class PrimeModule
         return false;
     }
 
+    public static function factor_single($what)
+    {
+        if (function_exists('shell_exec')) {
+            $res = trim(shell_exec('timeout 10 factor '.$what.' 2>&1') ?? '');
+            $res = explode(' ', $res);
+            if (count($res) !== 3) {
+                return false;
+            }
+            return (int) $res[1];
+        }
+
+        return false;
+    }
+
+    public static function factor($what)
+    {
+        $res = [self::factor_single($what)];
+        if ($res[0] === false) {
+            return false;
+        }
+        while (array_product($res) !== $what) {
+            $res[] = self::factor_single($what / array_product($res));
+        }
+
+        return $res;
+    }
+
     public static function python($what)
     {
         $res = [self::python_single($what)];
