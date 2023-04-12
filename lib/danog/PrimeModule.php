@@ -120,6 +120,7 @@ class PrimeModule
             if (count($res) !== 3) {
                 return false;
             }
+
             return (int) $res[1];
         }
 
@@ -484,16 +485,15 @@ class PrimeModule
             $x = $y;
             for ($i = 0; $i < $r; $i++) {
                 // $y = gmp_mod( (bcpowmod($y, 2, $n) + $c) , $n);
-                $y = bcmod((bcpowmod($y, 2, $n) + $c), $n);
+                $y = bcmod(bcpowmod($y, 2, $n) + $c, $n);
             }
 
             $k = 0;
             while ($k < $r && $g == 1) {
                 $ys = $y;
                 for ($j = 0; $j < min($m, $r - $k); $j++) {
-
                     // $y = gmp_mod( (bcpowmod($y, 2, $n) + $c), $n );
-                    $y = bcmod((bcpowmod($y, 2, $n) + $c), $n);
+                    $y = bcmod(bcpowmod($y, 2, $n) + $c, $n);
 
                     // $q = gmp_mod($q * abs($x-$y), $n);
                     $mul = bcmul($q, abs($x - $y));
@@ -508,7 +508,7 @@ class PrimeModule
         if ($g == $n) {
             while (true) {
                 // $ys = ( bcpowmod($ys, 2, $n) + $c ) % $n;
-                $ys = bcmod((bcpowmod($ys, 2, $n) + $c), $n);
+                $ys = bcmod(bcpowmod($ys, 2, $n) + $c, $n);
                 $g = $this->gcd2(abs($x - $ys), $n);
                 if ($g > 1) {
                     break;

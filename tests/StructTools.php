@@ -417,9 +417,9 @@ class StructTools
                     if (!is_int($result[$arraycount]) && !is_float($result[$arraycount])) {
                         $result[$arraycount] = (int) $result[$arraycount];
                     }
-/*                    if (is_float($result[$arraycount]) && $result[$arraycount] < PHP_INT_MAX) {
-                        $result[$arraycount] = (int) $result[$arraycount];
-                    }*/
+                    /*                    if (is_float($result[$arraycount]) && $result[$arraycount] < PHP_INT_MAX) {
+                                            $result[$arraycount] = (int) $result[$arraycount];
+                                        }*/
                     break;
                 case 'float':
                     if (!is_float($result[$arraycount])) {
