@@ -252,7 +252,7 @@ class PrimeModule
         if (!extension_loaded('primemodule')) {
             if (class_exists(FFI::class)) {
                 try {
-                    self::$ffi = FFI::load('/usr/include/primemodule-ffi.h');
+                    self::$ffi ??= FFI::load('/usr/include/primemodule-ffi.h');
                     $result = self::$ffi->factorizeFFI((string) $what);
                     if ($result > 0) {
                         return $result;
