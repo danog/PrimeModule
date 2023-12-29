@@ -38,7 +38,7 @@ class StructClass
      *
      * Packs data into bytes
      *
-     * @param	$data	Parameters to encode (may contain format string)
+     * @param $data Parameters to encode (may contain format string)
      *
      * @return Encoded data
      */
@@ -58,8 +58,8 @@ class StructClass
      *
      * Unpacks data into an array
      *
-     * @param	$format_maybe_data	Format string (may be data if class is istantiated with format string)
-     * @param	$data	            Data to decode
+     * @param $format_maybe_data Format string (may be data if class is istantiated with format string)
+     * @param $data              Data to decode
      *
      * @return Decoded data
      */
@@ -81,7 +81,7 @@ class StructClass
      * Return the size of the struct (and hence of the string) corresponding to the given format.
      *
      *
-     * @param	$format	Format string
+     * @param $format Format string
      *
      * @return int with size of the struct.
      */

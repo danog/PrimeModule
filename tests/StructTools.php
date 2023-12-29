@@ -244,8 +244,8 @@ class StructTools
      *
      * Packs data into bytes
      *
-     * @param	$format		Format string
-     * @param	$data	Parameters to encode
+     * @param $format Format string
+     * @param $data   Parameters to encode
      *
      * @return Encoded data
      */
@@ -352,8 +352,8 @@ class StructTools
      *
      * Unpacks data into an array
      *
-     * @param	$format	Format string
-     * @param	$data	Data to decode
+     * @param $format Format string
+     * @param $data   Data to decode
      *
      * @return Decoded data
      */
@@ -492,7 +492,7 @@ class StructTools
      *
      * Parses format string.
      *
-     * @param	$arraycount Array containing the number of chars contained in each element of the array to pack
+     * @param $arraycount Array containing the number of chars contained in each element of the array to pack
      *
      * @throws StructException if format string is too long or there aren't enough parameters or if an unkown format or modifier is supplied.
      *
@@ -567,7 +567,7 @@ class StructTools
      *
      *  Convert a binary string to an array based on the given format string
      *
-     * @param	$data   Data to convert to array
+     * @param $data Data to convert to array
      *
      * @return array
      **/
@@ -620,7 +620,7 @@ class StructTools
      *
      *  Pad format string with x format where needed
      *
-     * @param	$format Format string to pad
+     * @param $format Format string to pad
      *
      * @return Padded format string
      **/
@@ -669,8 +669,8 @@ class StructTools
      *  Returns a string containing a big endian binary representation of the given decimal number.
      *  Also pads binary number with zeros to match given $length
      *
-     * @param	$number		Decimal number to turn into binary
-     * @param	$length		Length to reach through padding
+     * @param $number Decimal number to turn into binary
+     * @param $length Length to reach through padding
      *
      * @return binary version of the given number
      **/
@@ -707,8 +707,8 @@ class StructTools
      *
      *  Converts a binary number to a decimal.
      *
-     * @param	$binary		binary number to turn into decimal
-     * @param	$unsigned	if set to false will interpret binary string as signed
+     * @param $binary   binary number to turn into decimal
+     * @param $unsigned if set to false will interpret binary string as signed
      *
      * @return deciaml version of the given number
      **/
@@ -736,7 +736,7 @@ class StructTools
      *
      *  Performs a NOT operation on every bit in the string (by bit I mean a literal 1 or 0)
      *
-     * @param	$string String to xor
+     * @param $string String to xor
      *
      * @return xored string
      **/
@@ -760,8 +760,8 @@ class StructTools
      *
      *  Add two binary numbers
      *
-     * @param	$x First binary number
-     * @param	$y Second binary number
+     * @param $x First binary number
+     * @param $y Second binary number
      *
      * @return sum of the two numbers
      **/
@@ -802,9 +802,9 @@ class StructTools
      * byte string with binary zeros so that the length is the
      * blocksize.
      *
-     * @param	$n		    Number to pack
-     * @param	$blocksize	Block size
-     * @param $unsigned Boolean that determines whether to work in signed or unsigned mode
+     * @param $n         Number to pack
+     * @param $blocksize Block size
+     * @param $unsigned  Boolean that determines whether to work in signed or unsigned mode
      *
      * @return Byte string
      **/
@@ -889,9 +889,9 @@ class StructTools
      * Convert a byte string to an integer.
      * This is (essentially) the inverse of num_pack().
      *
-     * @param	$s		    Data to unpack
-     * @param	$blocksize	Block size
-     * @param $unsigned Boolean that determines whether to work in signed or unsigned mode
+     * @param $s         Data to unpack
+     * @param $blocksize Block size
+     * @param $unsigned  Boolean that determines whether to work in signed or unsigned mode
      *
      * @return float or int with the unpack value
      **/
@@ -929,7 +929,7 @@ class StructTools
      *
      * Get length of each array element.
      *
-     * @param	$array		Array to parse
+     * @param $array Array to parse
      *
      * @return array with lengths
      **/
@@ -947,7 +947,7 @@ class StructTools
      *
      * Get total length of every array element.
      *
-     * @param	$array		Array to parse
+     * @param $array Array to parse
      *
      * @return int with the total length
      **/
@@ -966,9 +966,9 @@ class StructTools
      *
      * Generate range
      *
-     * @param	$start		Beginning of the range (or stop if no other params are specified)
-     * @param	$stop		End of the range
-     * @param	$step		Step to use in range
+     * @param $start Beginning of the range (or stop if no other params are specified)
+     * @param $stop  End of the range
+     * @param $step  Step to use in range
      *
      * @return array with the range
      **/
@@ -999,7 +999,7 @@ class StructTools
      *
      * Get the length of a string or of an array
      *
-     * @param	$input		String or array to parse
+     * @param $input String or array to parse
      *
      * @return int with the length
      **/

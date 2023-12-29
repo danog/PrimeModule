@@ -22,7 +22,7 @@ class Struct
      *
      * Istantiates the PHPStruct class in a static variable
      *
-     * @param	$format	    Format string
+     * @param $format Format string
      */
     public static function constructor()
     {
@@ -36,8 +36,8 @@ class Struct
      *
      * Packs data into bytes
      *
-     * @param	$format	    Format string
-     * @param	$data	Parameters to encode
+     * @param $format Format string
+     * @param $data   Parameters to encode
      *
      * @return Encoded data
      */
@@ -53,8 +53,8 @@ class Struct
      *
      * Unpacks data into an array
      *
-     * @param	$format	Format string
-     * @param	$data	Data to decode
+     * @param $format Format string
+     * @param $data   Data to decode
      *
      * @return Decoded data
      */
@@ -71,7 +71,7 @@ class Struct
      * Return the size of the struct (and hence of the string) corresponding to the given format.
      *
      *
-     * @param	$format	Format string
+     * @param $format Format string
      *
      * @return int with size of the struct.
      */
