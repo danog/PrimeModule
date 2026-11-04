@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 require 'vendor/autoload.php';
 require 'StructClass.php';
 require 'Struct.php';
