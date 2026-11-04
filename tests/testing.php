@@ -1,11 +1,19 @@
 #!/usr/bin/env php
 <?php
+
 require 'vendor/autoload.php';
 require 'StructClass.php';
 require 'Struct.php';
 require 'StructTools.php';
+// PRIMEMODULE_SKIP=wolfram,python skips methods (wolfram_single waits up to a minute for an empty answer).
+$GLOBALS['skip'] = array_filter(explode(',', (string) getenv('PRIMEMODULE_SKIP')));
 function get_time($callable, $param)
 {
+    foreach ($GLOBALS['skip'] as $skip) {
+        if (str_starts_with($callable[1], $skip)) {
+            return [0, 'skipped'];
+        }
+    }
     $a = microtime(true);
     $result = $callable($param);
     $time = microtime(true) - $a;
@@ -23,6 +31,10 @@ function test($n)
     echo '|'.str_pad('Multiple factorization of '.$n, strlen($init) - 2, ' ', STR_PAD_BOTH).'|'.PHP_EOL;
     echo '|'.str_pad('', strlen($init) - 2, '_', STR_PAD_RIGHT).'|'.PHP_EOL;
     echo $init.PHP_EOL;
+
+    list($time, $result) = get_time(['\danog\PrimeModule', 'madeline_crypto'], $n);
+    $GLOBALS['medium']['madeline_crypto'] += $time;
+    echo '| '.str_pad($result, 6, ' ', STR_PAD_RIGHT).' |  madeline   | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
 
     list($time, $result) = get_time(['\danog\PrimeModule', 'native_cpp'], $n, true);
     $GLOBALS['medium']['native_cpp'] += $time;
@@ -57,6 +69,10 @@ function test_single($n, $messy = false)
     echo '|'.str_pad('Single factorization of '.$n, strlen($init) - 2, ' ', STR_PAD_BOTH).'|'.PHP_EOL;
     echo '|'.str_pad('', strlen($init) - 2, '_', STR_PAD_RIGHT).'|'.PHP_EOL;
     echo $init.PHP_EOL;
+
+    list($time, $result) = get_time(['\danog\PrimeModule', 'madeline_crypto_single'], $n);
+    $GLOBALS['medium']['madeline_crypto'] += $time;
+    echo '| '.str_pad($result, strlen($n), ' ', STR_PAD_RIGHT).' |  madeline   | '.str_pad($time, 20, ' ', STR_PAD_RIGHT).' |'.PHP_EOL;
 
     list($time, $result) = get_time(['\danog\PrimeModule', 'native_single_cpp'], $n);
     $GLOBALS['medium']['native_cpp'] += $time;
@@ -103,7 +119,7 @@ function gen_payload()
 }
 
 echo PHP_EOL.'----------- HUGE SEMIPRIME TESTS (100 semiprimes) ----------'.PHP_EOL;
-$GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0, 'factor' => 0];
+$GLOBALS['medium'] = ['madeline_crypto' => 0, 'python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0, 'factor' => 0];
 $tg = fsockopen('tcp://149.154.167.51:443');
 fwrite($tg, chr(239));
 stream_set_timeout($tg, 1);
@@ -120,7 +136,7 @@ foreach ($medium as $type => $total) {
 }
 
 echo PHP_EOL.'------------------- SMALL MULTIPLE FACTOR TESTS -------------------'.PHP_EOL;
-$GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0, 'factor' => 0];
+$GLOBALS['medium'] = ['madeline_crypto' => 0, 'python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'native_cpp' => 0, 'factor' => 0];
 
 foreach ([200, 327, 35, 13589] as $multiple) {
     test($multiple);
@@ -131,7 +147,7 @@ foreach ($medium as $type => $total) {
 }
 
 echo PHP_EOL.'------------------- HUGE SEMIPRIME TESTS (MESSY) ------------------'.PHP_EOL;
-$GLOBALS['medium'] = ['python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'factor' => 0];
+$GLOBALS['medium'] = ['madeline_crypto' => 0, 'python' => 0, 'python_alt' => 0, 'wolfram' => 0, 'native' => 0, 'factor' => 0];
 $m = [1724114033281923457, 2189285106422392999, 3510535493073971807, 1756377470921216651, 1767867620107504387, 2149465210997855797];
 foreach ($m as $messy) {
     test_single($messy, true);

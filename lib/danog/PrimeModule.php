@@ -129,15 +129,17 @@ class PrimeModule
 
     public static function factor($what)
     {
-        $res = [self::factor_single($what)];
-        if ($res[0] === false) {
+        // coreutils' factor prints every prime factor ("327: 3 109"): factor_single() only takes
+        // semiprimes, and returns false for the prime that remains, which made the product 0 here.
+        if (!function_exists('shell_exec')) {
             return false;
         }
-        while (array_product($res) !== $what) {
-            $res[] = self::factor_single($what / array_product($res));
+        $res = explode(' ', trim(shell_exec('timeout 10 factor '.(int) $what.' 2>&1') ?? ''));
+        if (count($res) < 2 || $res[0] !== ((int) $what).':') {
+            return false;
         }
 
-        return $res;
+        return array_map('intval', \array_slice($res, 1));
     }
 
     public static function python($what)
@@ -246,6 +248,57 @@ class PrimeModule
         return $res;
     }
 
+    /**
+     * The madeline_crypto extension (https://github.com/danog/MadelineCrypto, `pie install danog/madelinecrypto`):
+     * Pollard-Brent in Montgomery form, in Rust. Numbers up to PHP_INT_MAX.
+     */
+    public static function madeline_crypto_single($what)
+    {
+        if (!\extension_loaded('madeline_crypto') || !\method_exists(\danog\MadelineProto\Native\Crypto::class, 'factorize')) {
+            return false;
+        }
+        if (!\is_int($what)) {
+            if (!\is_string($what) || (string) (int) $what !== $what) {
+                return false;
+            }
+            $what = (int) $what;
+        }
+
+        try {
+            return \danog\MadelineProto\Native\Crypto::factorize($what);
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
+    public static function madeline_crypto($what)
+    {
+        $res = [self::madeline_crypto_single($what)];
+        if ($res[0] === false) {
+            return false;
+        }
+        $what = (int) $what;
+        // Every step divides the rest by a factor > 1, so this ends within 63 steps; a factor that
+        // doesn't divide the rest (never returned by the extension) fails instead of looping.
+        while (($product = array_product($res)) !== $what) {
+            if (!\is_int($product) || $product < 2 || $what % $product !== 0) {
+                return false;
+            }
+            $rest = intdiv($what, $product);
+            $factor = self::madeline_crypto_single($rest);
+            if ($factor === false) {
+                // The rest is prime once it doesn't factorize further.
+                $factor = $rest;
+            } elseif (!\is_int($factor) || $factor < 2 || $rest % $factor !== 0) {
+                return false;
+            }
+            $res[] = $factor;
+        }
+        sort($res);
+
+        return $res;
+    }
+
     private static ?FFI $ffi = null;
 
     public static function native_single_cpp($what)
@@ -292,6 +345,10 @@ class PrimeModule
 
     public static function auto_single($what)
     {
+        $res = self::madeline_crypto_single($what);
+        if ($res !== false) {
+            return $res;
+        }
         $res = self::native_single_cpp($what);
         if ($res !== false) {
             return $res;
@@ -318,6 +375,10 @@ class PrimeModule
 
     public static function auto($what)
     {
+        $res = self::madeline_crypto($what);
+        if (is_array($res)) {
+            return $res;
+        }
         $res = self::native_cpp($what);
         if (is_array($res)) {
             return $res;
