@@ -13,7 +13,8 @@
         "php": "^8.0"
     },
     "suggest": {
-        "ext-primemodule": "Install the native C++ extension for extremely fast factorization (https://prime.madelineproto.xyz)"
+        "ext-madeline_crypto": "Install the MadelineCrypto extension for the fastest factorization (pie install danog/madelinecrypto)",
+        "ext-primemodule": "Install the native C++ extension for fast factorization (https://prime.madelineproto.xyz)"
     },
     "autoload": {
         "psr-0": {
