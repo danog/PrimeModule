@@ -277,11 +277,21 @@ class PrimeModule
             return false;
         }
         $what = (int) $what;
+        // Every step divides the rest by a factor > 1, so this ends within 63 steps; a factor that
+        // doesn't divide the rest (never returned by the extension) fails instead of looping.
         while (($product = array_product($res)) !== $what) {
+            if (!\is_int($product) || $product < 2 || $what % $product !== 0) {
+                return false;
+            }
             $rest = intdiv($what, $product);
             $factor = self::madeline_crypto_single($rest);
-            // The rest is prime once it doesn't factorize further.
-            $res[] = $factor === false ? $rest : $factor;
+            if ($factor === false) {
+                // The rest is prime once it doesn't factorize further.
+                $factor = $rest;
+            } elseif (!\is_int($factor) || $factor < 2 || $rest % $factor !== 0) {
+                return false;
+            }
+            $res[] = $factor;
         }
         sort($res);
 
