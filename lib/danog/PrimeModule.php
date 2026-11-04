@@ -263,6 +263,7 @@ class PrimeModule
             }
             $what = (int) $what;
         }
+
         try {
             return \danog\MadelineProto\Native\Crypto::factorize($what);
         } catch (\Throwable $e) {
